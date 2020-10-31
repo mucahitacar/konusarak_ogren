@@ -1,0 +1,137 @@
+﻿@model List<KonusarakOgren.Models.Sinav>
+
+@{
+    ViewData["Title"] = "Sinav";
+}
+
+<div class="row justify-content-center">
+
+    <h1> @Model.FirstOrDefault().baslik </h1><br />
+    @Model.FirstOrDefault().yazi
+    <
+</div>>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myform input').on('change', function () {
+                var selvalue = $("[type='radio']:checked").val();
+                $('#selvalue').val(selvalue);
+                if (selvalue == @Model[0].A_sikki)
+                    $('#selvalue').val(selvalue);
+                else
+                    $('#selvalue').val(@Model[0].B_sikki);
+
+            })
+
+
+        })
+    </script>
+    <form id="myform">
+        @for (int x = 0; x < 4; x++)
+        {<div class="form-group col-md-12">
+
+                @Model[x].soru
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary">
+                    <input type="radio" name="options-@x" id="A" value="A"> @Model[x].A_sikki
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options-@x" id="B" value="B"> @Model[x].B_sikki
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options-@x" id="C" value="C"> @Model[x].C_sikki
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options-@x" id="D" value="D"> @Model[x].D_sikki
+                </label>
+            </div>
+        }
+        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="text" id="selvalue" />
+    </form>*@
+
+<form name="formTest">
+    <fieldset class="radiogroup">
+        <legend>Soru 1: @Model[0].soru</legend>
+        <ul class="radio" style="list-style:none">
+            <li>A) <input type="radio" name="q1" value="A" /><label>@Model[0].A_sikki</label></li>
+            <li>B) <input type="radio" name="q1" value="B" /><label>@Model[0].B_sikki</label></li>
+            <li>C) <input type="radio" name="q1" value="C" /><label>@Model[0].C_sikki</label></li>
+            <li>D) <input type="radio" name="q1" value="D" /><label>@Model[0].D_sikki</label></li>
+        </ul>
+    </fieldset>
+
+    <fieldset class="radiogroup">
+        <legend>Soru 2: @Model[1].soru</legend>
+        <ul class="radio" style="list-style:none">
+            <li>A) <input type="radio" name="q2" value="A" /><label>@Model[1].A_sikki</label></li>
+            <li>B) <input type="radio" name="q2" value="B" /><label>@Model[1].B_sikki</label></li>
+            <li>C) <input type="radio" name="q2" value="C" /><label>@Model[1].C_sikki</label></li>
+            <li>D) <input type="radio" name="q2" value="D" /><label>@Model[1].D_sikki</label></li>
+        </ul>
+    </fieldset>
+
+    <fieldset class="radiogroup">
+        <legend>Soru 2: @Model[2].soru</legend>
+        <ul class="radio" style="list-style:none">
+            <li>A) <input type="radio" name="q3" value="A" /><label>@Model[2].A_sikki</label></li>
+            <li>B) <input type="radio" name="q3" value="B" /><label>@Model[2].B_sikki</label></li>
+            <li>C) <input type="radio" name="q3" value="C" /><label>@Model[2].C_sikki</label></li>
+            <li>D) <input type="radio" name="q3" value="D" /><label>@Model[2].D_sikki</label></li>
+        </ul>
+    </fieldset>
+    <fieldset class="radiogroup">
+        <legend>Soru 2: @Model[3].soru</legend>
+        <ul class="radio" style="list-style:none">
+            <li>A) <input type="radio" name="q4" value="A" /><label>@Model[3].A_sikki</label></li>
+            <li>B) <input type="radio" name="q4" value="B" /><label>@Model[3].B_sikki</label></li>
+            <li>C) <input type="radio" name="q4" value="C" /><label>@Model[3].C_sikki</label></li>
+            <li>D) <input type="radio" name="q4" value="D" /><label>@Model[3].D_sikki</label></li>
+        </ul>
+    </fieldset>
+    <input type="button" value="Cevapla" onclick="checkAnswer()" />
+</form>
+<div id="rapor"></div>
+
+<script type="text/javascript">
+    function checkAnswer() {
+        var soruSayisi = 4;
+        var gelenCevap = new Array();
+        var dogruCevap = new Array("@Model[0].cevap","@Model[1].cevap","@Model[2].cevap","@Model[3].cevap");
+        var dogru = 0;
+        var yanlis = 0;
+        var cevap = 0;
+        var rapor = "";
+
+        for (i = 1; i <= soruSayisi; i++) {
+            var secenekler = document.getElementsByName("q" + i);
+            for (j = 0; j < secenekler.length; j++) {
+                if (secenekler[j].checked) {
+                    if (secenekler[j].value == dogruCevap[i - 1]) {
+                        cevap = 1;
+                    } else {
+                        cevap = 0;
+                    }
+                    if (cevap) {
+                        rapor += i + ". Soru için cevabınız: " + secenekler[j].value + ", Doğru <br />";
+                    } else {
+                        rapor += i + ". Soru için cevabınız: " + secenekler[j].value + ", YANLIŞ, Doğru Cevap: " + dogruCevap[i - 1] + "<br />";
+                    }
+                    gelenCevap.push(secenekler[j].value);
+                }
+            }
+        }
+
+        for (k = 0; k < soruSayisi; k++) {
+            if (gelenCevap[k] == dogruCevap[k]) {
+                dogru++;
+            } else {
+                yanlis++;
+            }
+        }
+        rapor += "Sonuç: " + dogru + " Doğru, " + yanlis + " Yanlış" + "<br />";
+        document.getElementById('rapor').innerHTML = rapor;
+    }
+</script>

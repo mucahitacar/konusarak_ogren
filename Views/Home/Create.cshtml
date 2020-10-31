@@ -1,0 +1,92 @@
+﻿@model KonusarakOgren.Models.MultipleModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<hr />
+<div class="row justify-content-center" >
+    <div class="col-md-12 justify-content-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+               
+                @{
+                    var selectLists = new List<SelectListItem>();
+                    string a;
+                    int b; 
+                    int y = 1;
+                    foreach (var item in Model.CreateModel)
+                    {
+
+                        selectLists.Add(new SelectListItem { Text = y+"-"+item.baslik, Value = item.yazi});
+                        y++;
+                    }
+
+                    <div> @Html.DropDownList("yazi_listesi", selectLists, "--Seçiniz--")</div>}<br />
+                    
+
+
+                    <div id="span1"></div><br />
+                    
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            $("#yazi_listesi").change(function () {
+                                 a = $("#yazi_listesi Option:Selected").val();
+                                 b = $("#yazi_listesi Option:Selected").index();
+                                $("#span1").text(a);
+
+
+                            })
+                        }
+
+                        )
+                    </script>
+                    @for (int x = 0; x < 4; x++)
+                    {
+                        <div class="form-group col-md-12">
+                            <input asp-for="@Model.Sorular[x].soru" class="form-control" placeholder="Soru" />
+                            <span asp-validation-for="@Model.Sorular[x].soru" class="text-danger"></span>
+                        </div>
+                         
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input asp-for="@Model.Sorular[x].A_sikki" class="form-control" placeholder="A" />
+                                <span asp-validation-for="@Model.Sorular[x]_sikki" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input asp-for="@Model.Sorular[x].B_sikki" class="form-control" placeholder="B" />
+                                <span asp-validation-for="@Model.Sorular[x].B_sikki" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input asp-for="@Model.Sorular[x].C_sikki" class="form-control" placeholder="C" />
+                                <span asp-validation-for="@Model.Sorular[x].C_sikki" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input asp-for="@Model.Sorular[x].D_sikki" class="form-control" placeholder="D" />
+                                <span asp-validation-for="@Model.Sorular[x].D_sikki" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div>
+                            @Html.DropDownListFor(m => m.Sorular[x].cevap, Sorular.GetCevapSelectItems(), "Choose Answer", new { @class = "form-control" })
+                            <br />
+
+                        </div>
+                    }
+                </div>
+                
+
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </form>
+                
+                    
+    
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
