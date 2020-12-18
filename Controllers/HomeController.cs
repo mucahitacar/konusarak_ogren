@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,17 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using KonusarakOgren.Models;
 using Microsoft.Data.Sqlite;
-using dotnetcoreapi.Controllers;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
-using System.Net;
-using System.IO;
 using System.Net.Http;
 using HtmlAgilityPack;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-
+//todo delete çalışmıyor düzelt
 namespace KonusarakOgren.Controllers
 {
     public class HomeController : Controller
@@ -161,13 +156,18 @@ namespace KonusarakOgren.Controllers
             var htmldocument2 = new HtmlDocument();
             htmldocument2.LoadHtml(text2);
             string paragrafhtml;
-            if (yazi.Contains("story"))
+            if (yazi.Contains("better"))
+            {
+                paragrafhtml = htmldocument2.DocumentNode.SelectNodes("/html/body/div[1]/div/main/article/div[2]/div/div/div[1]/div[1]/p[2]/text()")[0].InnerText;
+                return (paragrafhtml);
+            }
+            else if (yazi.Contains("story"))
             {
                 paragrafhtml = htmldocument2.DocumentNode.SelectNodes("/html/body/div[1]/div/main/article/div[2]/div/div[1]/div[1]/div[1]/p[1]/text()")[0].InnerText;
                 return (paragrafhtml);
+                
             }
-            else
-            {
+            else {
                 paragrafhtml = "Bağlantının linki story ile başlamadığı için yazının xpath adresi değişmiş!";
                 return (paragrafhtml);
             }
