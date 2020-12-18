@@ -12,7 +12,7 @@ using HtmlAgilityPack;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-//todo delete çalışmıyor düzelt
+//todo delete çalışmıyor düzeltilecek
 namespace KonusarakOgren.Controllers
 {
     public class HomeController : Controller
