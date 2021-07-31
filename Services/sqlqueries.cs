@@ -51,11 +51,11 @@ namespace dotnetcoreapi.Controllers
         public static void Sqlitebaglanti()
         {
             using (var connection = new SqliteConnection("" +
-    new SqliteConnectionStringBuilder
-    {
-        DataSource = "hello.db"
-    }))
-            {
+                    new SqliteConnectionStringBuilder
+                    {
+                        DataSource = "hello.db"
+                    }))
+                    {
                 connection.Open();
 
 
@@ -79,16 +79,13 @@ namespace dotnetcoreapi.Controllers
                             Console.WriteLine("{0}\t{1}", reader.GetString(0),
                             reader.GetString(1));
 
-
                         }
                     }
-
                     transaction.Commit();
-
                 }
             }
         }
 
     }
 }
-     
+

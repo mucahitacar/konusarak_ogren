@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +11,8 @@ using HtmlAgilityPack;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using Newtonsoft.Json;
 //todo delete çalışmıyor düzeltilecek
 namespace KonusarakOgren.Controllers
 {
@@ -22,44 +23,13 @@ namespace KonusarakOgren.Controllers
         private List<exams_model> exams_modeli = new List<exams_model>();
         private List<Sinav> Sinav_Model = new List<Sinav>();
         private List<yazi_model> yazi_modeli = new List<yazi_model>();
-        public static class MyGlobalVariables
-        {
-            public static string baslik1 { get; set; }
-            public static string baslik2 { get; set; }
-            public static string baslik3 { get; set; }
-            public static string baslik4 { get; set; }
-            public static string baslik5 { get; set; }
-            public static string yazi1 { get; set; }
-            public static string yazi2 { get; set; }
-            public static string yazi3 { get; set; }
-            public static string yazi4 { get; set; }
-            public static string yazi5 { get; set; }
-
-        }
 
 
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
 
         [Authorize]
         [HttpGet]
@@ -80,99 +50,137 @@ namespace KonusarakOgren.Controllers
             var asd4_link = htmldocument.DocumentNode.SelectNodes("/html/body/div[3]/div/div[3]/div/div/div[2]/div[1]/div/div[1]/div[2]/div[2]/div/ul/li[2]/a[1]")[0];
             var asd5 = htmldocument.DocumentNode.SelectNodes("/html/body/div[3]/div/div[3]/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div[2]/div/ul/li[2]/a[2]/h2")[0];
             var asd5_link = htmldocument.DocumentNode.SelectNodes("/html/body/div[3]/div/div[3]/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div[2]/div/ul/li[2]/a[1]")[0];
-            MyGlobalVariables.baslik1 = asd.InnerText;
+
+            FetchFromWired.title_1 = asd.InnerText;
             var q_link = VeriAl(asd_link.OuterHtml);
-            MyGlobalVariables.yazi1 = q_link.Result.Replace("'", "‘");
+            FetchFromWired.article_1 = q_link.Result.Replace("'", "‘");
 
-            MyGlobalVariables.baslik2 = asd2.InnerText;
+            FetchFromWired.title_2 = asd2.InnerText;
             var q2_link = VeriAl(asd2_link.OuterHtml);
-            MyGlobalVariables.yazi2 = q2_link.Result.Replace("'", "‘");
+            FetchFromWired.article_2 = q2_link.Result.Replace("'", "‘");
 
-            MyGlobalVariables.baslik3 = asd3.InnerText;
+            FetchFromWired.title_3 = asd3.InnerText;
             var q3_link = VeriAl(asd3_link.OuterHtml);
-            MyGlobalVariables.yazi3 = q3_link.Result.Replace("'", "‘");
+            FetchFromWired.article_3 = q3_link.Result.Replace("'", "‘");
 
-            MyGlobalVariables.baslik4 = asd4.InnerText;
+            FetchFromWired.title_4 = asd4.InnerText;
             var q4_link = VeriAl(asd4_link.OuterHtml);
-            MyGlobalVariables.yazi4 = q4_link.Result.Replace("'", "‘");
+            FetchFromWired.article_4 = q4_link.Result.Replace("'", "‘");
 
-            MyGlobalVariables.baslik5 = asd5.InnerText;
+            FetchFromWired.title_5 = asd5.InnerText;
             var q5_link = VeriAl(asd5_link.OuterHtml);
-            MyGlobalVariables.yazi5 = q5_link.Result.Replace("'", "‘");
+            FetchFromWired.article_5 = q5_link.Result.Replace("'", "‘");
 
 
-            
+
             MultipleModel temp = new MultipleModel();
             //temp.Sorular = new List<Sorular>();
             //temp.Sorular.Add(new Sorular {A_sikki="", B_sikki = "" , C_sikki = "" , D_sikki = "" ,soru_id="", soru = "" , cevap = "" });// bu satırda yaptığım işlemin önemi yok hata engellemek için yapıldı sadece.
             model.Add(new CreateModel()
             {
 
-                baslik = MyGlobalVariables.baslik1,
-                yazi = MyGlobalVariables.yazi1
+                baslik = FetchFromWired.title_1,
+                yazi = FetchFromWired.article_1
 
             });
             model.Add(new CreateModel()
             {
 
-                baslik = MyGlobalVariables.baslik2,
-                yazi = MyGlobalVariables.yazi2
+                baslik = FetchFromWired.title_2,
+                yazi = FetchFromWired.article_2
 
             });
             model.Add(new CreateModel()
             {
 
-                baslik = MyGlobalVariables.baslik3,
-                yazi = MyGlobalVariables.yazi3
+                baslik = FetchFromWired.title_3,
+                yazi = FetchFromWired.article_3
 
             });
             model.Add(new CreateModel()
             {
 
-                baslik = MyGlobalVariables.baslik4,
-                yazi = MyGlobalVariables.yazi4
+                baslik = FetchFromWired.title_4,
+                yazi = FetchFromWired.article_4
 
             });
             model.Add(new CreateModel()
             {
 
-                baslik = MyGlobalVariables.baslik5,
-                yazi = MyGlobalVariables.yazi5
+                baslik = FetchFromWired.title_5,
+                yazi = FetchFromWired.article_5
 
             });
 
             temp.CreateModel = model;
-
+            temp.Sorular = new List<Sorular>();
+            temp.Sorular.Add(new Sorular { });
+            temp.Sorular.Add(new Sorular { });
+            temp.Sorular.Add(new Sorular { });
+            temp.Sorular.Add(new Sorular { });
             return View(temp);
 
         }
+
+        [HttpPost]
+        public IActionResult CevaplariGetir(string baslik)
+        {
+                List<string> dogruCevaplar = new List<string>();
+            using (var connection = new SqliteConnection("" +
+                new SqliteConnectionStringBuilder
+                {
+                    DataSource = "hello.db"
+                }))
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var selectCommand = connection.CreateCommand();
+                    selectCommand.Transaction = transaction;
+
+                    selectCommand.CommandText = $"SELECT * FROM Sorular where baslik='{baslik}'";
+                    using (var reader = selectCommand.ExecuteReader())
+                    {
+                        string x;
+                        while (reader.Read())
+                        {
+                            dogruCevaplar.Add(reader.GetString(6));
+                        }
+                    }
+                    transaction.Commit();
+                }
+
+            }
+
+            //var cevap = "a";
+            //Cevap cevap1 = new Cevap { Cevapp = "a" };
+
+            return Ok(JsonConvert.SerializeObject(dogruCevaplar));
+        }
+
         public async Task<string> VeriAl(string endpoint)
         {
             int IcerikBaslangicIndex = endpoint.IndexOf("\"") + 1;
             int IcerikBitisIndex = endpoint.Substring(IcerikBaslangicIndex).IndexOf("\"");
             string yazi = endpoint.Substring(IcerikBaslangicIndex, IcerikBitisIndex);
             var httpclient2 = new HttpClient();
-            var text2 = await httpclient2.GetStringAsync("http://www.wired.com" + yazi);
+            var text2 = "";
+            try
+            {
+                text2 = await httpclient2.GetStringAsync("http://www.wired.com" + yazi);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+
             var htmldocument2 = new HtmlDocument();
             htmldocument2.LoadHtml(text2);
-            string paragrafhtml;
-            if (yazi.Contains("better"))
-            {
-                paragrafhtml = htmldocument2.DocumentNode.SelectNodes("/html/body/div[1]/div/main/article/div[2]/div/div/div[1]/div[1]/p[2]/text()")[0].InnerText;
-                return (paragrafhtml);
-            }
-            else if (yazi.Contains("story"))
-            {
-                paragrafhtml = htmldocument2.DocumentNode.SelectNodes("/html/body/div[1]/div/main/article/div[2]/div/div[1]/div[1]/div[1]/p[1]/text()")[0].InnerText;
-                return (paragrafhtml);
-                
-            }
-            else {
-                paragrafhtml = "Bağlantının linki story ile başlamadığı için yazının xpath adresi değişmiş!";
-                return (paragrafhtml);
-            }
-            
+            return htmldocument2.DocumentNode.SelectNodes("//p").ToList().Where(i => i.InnerText.Length > 200).FirstOrDefault().InnerText;
         }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(MultipleModel multipleModel, IFormCollection form)
@@ -203,16 +211,16 @@ namespace KonusarakOgren.Controllers
                         insertCommand.Parameters.AddWithValue("$C_sikki", item.C_sikki);
                         insertCommand.Parameters.AddWithValue("$D_sikki", item.D_sikki);
                         insertCommand.Parameters.AddWithValue("$cevap", item.cevap.ToString());
-                        if (strDDLValue == MyGlobalVariables.yazi1)
-                            insertCommand.Parameters.AddWithValue("$baslik", MyGlobalVariables.baslik1);
-                        else if (strDDLValue == MyGlobalVariables.yazi2)
-                            insertCommand.Parameters.AddWithValue("$baslik", MyGlobalVariables.baslik2);
-                        else if (strDDLValue == MyGlobalVariables.yazi3)
-                            insertCommand.Parameters.AddWithValue("$baslik", MyGlobalVariables.baslik3);
-                        else if (strDDLValue == MyGlobalVariables.yazi4)
-                            insertCommand.Parameters.AddWithValue("$baslik", MyGlobalVariables.baslik4);
+                        if (strDDLValue == FetchFromWired.article_1)
+                            insertCommand.Parameters.AddWithValue("$baslik", FetchFromWired.title_1);
+                        else if (strDDLValue == FetchFromWired.article_2)
+                            insertCommand.Parameters.AddWithValue("$baslik", FetchFromWired.title_2);
+                        else if (strDDLValue == FetchFromWired.article_3)
+                            insertCommand.Parameters.AddWithValue("$baslik", FetchFromWired.title_3);
+                        else if (strDDLValue == FetchFromWired.article_4)
+                            insertCommand.Parameters.AddWithValue("$baslik", FetchFromWired.title_4);
                         else
-                            insertCommand.Parameters.AddWithValue("$baslik", MyGlobalVariables.baslik5);
+                            insertCommand.Parameters.AddWithValue("$baslik", FetchFromWired.title_5);
                         insertCommand.CommandText = "INSERT INTO Sorular (  soru, A_sikki,B_sikki,C_sikki,D_sikki,cevap, yazi, baslik ) VALUES (  $soru, $A_sikki,$B_sikki,$C_sikki,$D_sikki,$cevap, $yazi, $baslik )";
                         insertCommand.ExecuteNonQuery();
 
@@ -285,7 +293,7 @@ namespace KonusarakOgren.Controllers
                     var selectCommand = connection.CreateCommand();
                     selectCommand.Transaction = transaction;
 
-                    selectCommand.CommandText = $"SELECT DISTINCT baslik FROM CreateModel where baslik='{baslik}'";
+                    selectCommand.CommandText = $"SELECT DISTINCT baslik FROM Sorular where baslik='{baslik}'";
                     using (var reader = selectCommand.ExecuteReader())
                     {
                         string x;
@@ -306,7 +314,7 @@ namespace KonusarakOgren.Controllers
                 }
             }
             return View(exams_modeli.FirstOrDefault());
-        } 
+        }
 
         [Authorize]
         [HttpPost]
@@ -328,7 +336,7 @@ namespace KonusarakOgren.Controllers
                 {
                     var selectCommand = connection.CreateCommand();
                     selectCommand.Transaction = transaction;
-                    selectCommand.CommandText = $"SELECT DISTINCT yazi FROM CreateModel where baslik='{baslik}'";
+                    selectCommand.CommandText = $"SELECT DISTINCT yazi FROM Sorular where baslik='{baslik}'";
                     using (var reader = selectCommand.ExecuteReader())
                     {
                         while (reader.Read())
@@ -406,6 +414,7 @@ namespace KonusarakOgren.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
 
@@ -453,7 +462,6 @@ namespace KonusarakOgren.Controllers
 
                         }
                     }
-
                     transaction.Commit();
 
                 }
@@ -463,13 +471,16 @@ namespace KonusarakOgren.Controllers
                 if (bilgiler != null)
                 {
                     var claims = new List<Claim>
-                {  new Claim(ClaimTypes.Name,p.kullanici_adi) };
+                { new Claim(ClaimTypes.Name,p.kullanici_adi) };
 
                     var useridentity = new ClaimsIdentity(claims, "Login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
                     await HttpContext.SignInAsync(principal);
                     return RedirectToAction("Exams", "Home");
                 }
+                else
+                    ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı!");
+
                 return View();
 
             }

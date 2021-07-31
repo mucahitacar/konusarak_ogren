@@ -10,9 +10,9 @@
     @Model.FirstOrDefault().yazi
     <
 </div>>
-@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
+@*   <script>
         $(document).ready(function () {
             $('#myform input').on('change', function () {
                 var selvalue = $("[type='radio']:checked").val();
@@ -97,9 +97,19 @@
 
 <script type="text/javascript">
     function checkAnswer() {
+        $.ajax({
+            url: '/Home/CevaplariGetir?baslik=@Model.FirstOrDefault().baslik',
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                calculate(data);
+            }
+        });
+    }
+
+    function calculate(dogruCevap) {
         var soruSayisi = 4;
         var gelenCevap = new Array();
-        var dogruCevap = new Array("@Model[0].cevap","@Model[1].cevap","@Model[2].cevap","@Model[3].cevap");
         var dogru = 0;
         var yanlis = 0;
         var cevap = 0;

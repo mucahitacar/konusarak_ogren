@@ -1,4 +1,4 @@
-﻿@model KonusarakOgren.Models.MultipleModel
+﻿@model MultipleModel
 
 @{
     ViewData["Title"] = "Create";
@@ -46,28 +46,28 @@
                     @for (int x = 0; x < 4; x++)
                     {
                         <div class="form-group col-md-12">
-                            <input asp-for="@Model.Sorular[x].soru" class="form-control" placeholder="Soru" />
-                            <span asp-validation-for="@Model.Sorular[x].soru" class="text-danger"></span>
+                            <input asp-for="Sorular[x].soru" class="form-control" placeholder="Soru - [@x]" />
+                            <span asp-validation-for="Sorular[x].soru" class="text-danger"></span>
                         </div>
                          
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <input asp-for="@Model.Sorular[x].A_sikki" class="form-control" placeholder="A" />
-                                <span asp-validation-for="@Model.Sorular[x]_sikki" class="text-danger"></span>
+                                <input asp-for="Sorular[x].A_sikki" class="form-control" placeholder="A" />
+                                <span asp-validation-for="Sorular[x].A_sikki" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <input asp-for="@Model.Sorular[x].B_sikki" class="form-control" placeholder="B" />
-                                <span asp-validation-for="@Model.Sorular[x].B_sikki" class="text-danger"></span>
+                                <input asp-for="Sorular[x].B_sikki" class="form-control" placeholder="B" />
+                                <span asp-validation-for="Sorular[x].B_sikki" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <input asp-for="@Model.Sorular[x].C_sikki" class="form-control" placeholder="C" />
-                                <span asp-validation-for="@Model.Sorular[x].C_sikki" class="text-danger"></span>
+                                <input asp-for="Sorular[x].C_sikki" class="form-control" placeholder="C" />
+                                <span asp-validation-for="Sorular[x].C_sikki" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <input asp-for="@Model.Sorular[x].D_sikki" class="form-control" placeholder="D" />
-                                <span asp-validation-for="@Model.Sorular[x].D_sikki" class="text-danger"></span>
+                                <input asp-for="Sorular[x].D_sikki" class="form-control" placeholder="D" />
+                                <span asp-validation-for="Sorular[x].D_sikki" class="text-danger"></span>
                             </div>
                         </div>
                         <div>
