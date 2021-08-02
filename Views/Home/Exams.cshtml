@@ -4,16 +4,16 @@
     ViewData["Title"] = "Exams";
 }
 
-<h1>Sınavlar</h1>
+<h1>Exams</h1>
 
 <p>
-    <a asp-action="Create">Sınav Oluştur</a>
+    <a asp-action="Create">Create Exam</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.baslik)
+                Titles
             </th>
             <th></th>
         </tr>
@@ -25,8 +25,8 @@
                 @Html.DisplayFor(modelItem => item.baslik)
             </td>
             <td>
-                @Html.ActionLink("Çöz", "Sinav", new { baslik=item.baslik }) |
-                @Html.ActionLink("Sil", "Delete", new { baslik=item.baslik })
+                @Html.ActionLink("Solve", "Sinav", new { baslik=item.baslik }) |
+                @Html.ActionLink("Delete", "Delete", new { baslik=item.baslik })
             </td>
         </tr>
 }

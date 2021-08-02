@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using HtmlAgilityPack;
 using KonusarakOgren.Models;
-using Microsoft.Data.Sqlite;
-using Microsoft.AspNetCore.Http;
-using System.Net.Http;
-using HtmlAgilityPack;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
-//todo delete çalışmıyor düzeltilecek
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
 namespace KonusarakOgren.Controllers
 {
     public class HomeController : Controller
     {
-        List<login> c = new List<login>();
+        List<login> loggedUser = new List<login>();
         private List<CreateModel> model = new List<CreateModel>();
         private List<exams_model> exams_modeli = new List<exams_model>();
         private List<Sinav> Sinav_Model = new List<Sinav>();
@@ -125,7 +124,7 @@ namespace KonusarakOgren.Controllers
         [HttpPost]
         public IActionResult CevaplariGetir(string baslik)
         {
-                List<string> dogruCevaplar = new List<string>();
+            List<string> dogruCevaplar = new List<string>();
             using (var connection = new SqliteConnection("" +
                 new SqliteConnectionStringBuilder
                 {
@@ -343,21 +342,13 @@ namespace KonusarakOgren.Controllers
                         {
                             yazi_modeli.Add(new yazi_model()
                             {
-
                                 yazi = reader.GetString(0)
-
-                            }); ;
-
+                            });
                         }
-
                     }
                     string x = yazi_modeli.FirstOrDefault().yazi;
                     x = x.Replace("'", "‘");
                     selectCommand.CommandText = $"Delete FROM Sorular where yazi='{x}'";
-                    selectCommand.ExecuteNonQuery();
-
-
-                    selectCommand.CommandText = $"Delete FROM CreateModel where baslik='{baslik}'";
                     selectCommand.ExecuteNonQuery();
                     transaction.Commit();
                 }
@@ -417,10 +408,9 @@ namespace KonusarakOgren.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-
             return View();
-
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(login p)
         {
@@ -453,7 +443,7 @@ namespace KonusarakOgren.Controllers
                         string x;
                         while (reader.Read())
                         {
-                            c.Add(new login()
+                            loggedUser.Add(new login()
                             {
                                 kullanici_adi = reader.GetString(0),
                                 sifre = reader.GetString(1)
@@ -466,13 +456,10 @@ namespace KonusarakOgren.Controllers
 
                 }
 
-
-                var bilgiler = c.FirstOrDefault();
-                if (bilgiler != null)
+                var userInfo = loggedUser.FirstOrDefault();
+                if (userInfo != null)
                 {
-                    var claims = new List<Claim>
-                { new Claim(ClaimTypes.Name,p.kullanici_adi) };
-
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, p.kullanici_adi) };
                     var useridentity = new ClaimsIdentity(claims, "Login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
                     await HttpContext.SignInAsync(principal);
@@ -482,7 +469,6 @@ namespace KonusarakOgren.Controllers
                     ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı!");
 
                 return View();
-
             }
         }
     }
