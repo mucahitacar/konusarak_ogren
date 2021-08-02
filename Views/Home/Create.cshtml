@@ -13,8 +13,6 @@
                
                 @{
                     var selectLists = new List<SelectListItem>();
-                    string a;
-                    int b; 
                     int y = 1;
                     foreach (var item in Model.CreateModel)
                     {
@@ -23,7 +21,7 @@
                         y++;
                     }
 
-                    <div> @Html.DropDownList("yazi_listesi", selectLists, "--Seçiniz--")</div>}<br />
+                    <div> @Html.DropDownList("yazi_listesi", selectLists, "--Choose Title--")</div>}<br />
                     
 
 
@@ -46,7 +44,7 @@
                     @for (int x = 0; x < 4; x++)
                     {
                         <div class="form-group col-md-12">
-                            <input asp-for="Sorular[x].soru" class="form-control" placeholder="Soru - [@x]" />
+                            <input asp-for="Sorular[x].soru" class="form-control" placeholder="Question - [@(x + 1)]" />
                             <span asp-validation-for="Sorular[x].soru" class="text-danger"></span>
                         </div>
                          

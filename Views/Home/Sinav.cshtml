@@ -12,46 +12,6 @@
 </div>>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-@*   <script>
-        $(document).ready(function () {
-            $('#myform input').on('change', function () {
-                var selvalue = $("[type='radio']:checked").val();
-                $('#selvalue').val(selvalue);
-                if (selvalue == @Model[0].A_sikki)
-                    $('#selvalue').val(selvalue);
-                else
-                    $('#selvalue').val(@Model[0].B_sikki);
-
-            })
-
-
-        })
-    </script>
-    <form id="myform">
-        @for (int x = 0; x < 4; x++)
-        {<div class="form-group col-md-12">
-
-                @Model[x].soru
-            </div>
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="radio" name="options-@x" id="A" value="A"> @Model[x].A_sikki
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options-@x" id="B" value="B"> @Model[x].B_sikki
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options-@x" id="C" value="C"> @Model[x].C_sikki
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options-@x" id="D" value="D"> @Model[x].D_sikki
-                </label>
-            </div>
-        }
-        <input type="submit" value="Create" class="btn btn-primary" />
-        <input type="text" id="selvalue" />
-    </form>*@
-
 <form name="formTest">
     <fieldset class="radiogroup">
         <legend>Soru 1: @Model[0].soru</legend>
