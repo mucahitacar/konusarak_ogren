@@ -7,9 +7,8 @@
 <div class="row justify-content-center">
 
     <h1> @Model.FirstOrDefault().baslik </h1><br />
-    @Model.FirstOrDefault().yazi
-    <
-</div>>
+            @Model.FirstOrDefault().yazi
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <form name="formTest">
@@ -34,7 +33,7 @@
     </fieldset>
 
     <fieldset class="radiogroup">
-        <legend>Soru 2: @Model[2].soru</legend>
+        <legend>Soru 3: @Model[2].soru</legend>
         <ul class="radio" style="list-style:none">
             <li>A) <input type="radio" name="q3" value="A" /><label>@Model[2].A_sikki</label></li>
             <li>B) <input type="radio" name="q3" value="B" /><label>@Model[2].B_sikki</label></li>
@@ -43,7 +42,7 @@
         </ul>
     </fieldset>
     <fieldset class="radiogroup">
-        <legend>Soru 2: @Model[3].soru</legend>
+        <legend>Soru 4: @Model[3].soru</legend>
         <ul class="radio" style="list-style:none">
             <li>A) <input type="radio" name="q4" value="A" /><label>@Model[3].A_sikki</label></li>
             <li>B) <input type="radio" name="q4" value="B" /><label>@Model[3].B_sikki</label></li>
@@ -85,9 +84,9 @@
                         cevap = 0;
                     }
                     if (cevap) {
-                        rapor += i + ". Soru için cevabınız: " + secenekler[j].value + ", Doğru <br />";
+                        rapor += "Your Answer For Question " + i + ":" + secenekler[j].value + ", CORRECT <br />";
                     } else {
-                        rapor += i + ". Soru için cevabınız: " + secenekler[j].value + ", YANLIŞ, Doğru Cevap: " + dogruCevap[i - 1] + "<br />";
+                        rapor += "Your Answer For Question " + i + ":" + secenekler[j].value + ", FALSE, Correct Answer: " + dogruCevap[i - 1] + "<br />";
                     }
                     gelenCevap.push(secenekler[j].value);
                 }
@@ -101,7 +100,7 @@
                 yanlis++;
             }
         }
-        rapor += "Sonuç: " + dogru + " Doğru, " + yanlis + " Yanlış" + "<br />";
+        rapor += "Result: " + dogru + " Correct, " + yanlis + " False" + "<br />";
         document.getElementById('rapor').innerHTML = rapor;
     }
 </script>

@@ -73,9 +73,7 @@ namespace KonusarakOgren.Controllers
 
 
             MultipleModel temp = new MultipleModel();
-            //temp.Sorular = new List<Sorular>();
-            //temp.Sorular.Add(new Sorular {A_sikki="", B_sikki = "" , C_sikki = "" , D_sikki = "" ,soru_id="", soru = "" , cevap = "" });// bu satırda yaptığım işlemin önemi yok hata engellemek için yapıldı sadece.
-            model.Add(new CreateModel()
+             model.Add(new CreateModel()
             {
 
                 baslik = FetchFromWired.title_1,
@@ -151,10 +149,6 @@ namespace KonusarakOgren.Controllers
                 }
 
             }
-
-            //var cevap = "a";
-            //Cevap cevap1 = new Cevap { Cevapp = "a" };
-
             return Ok(JsonConvert.SerializeObject(dogruCevaplar));
         }
 
@@ -173,7 +167,6 @@ namespace KonusarakOgren.Controllers
             {
                 return ex.Message;
             }
-
 
             var htmldocument2 = new HtmlDocument();
             htmldocument2.LoadHtml(text2);
@@ -234,13 +227,11 @@ namespace KonusarakOgren.Controllers
         [Authorize]
         public IActionResult Exams()
         {
-
-
             using (var connection = new SqliteConnection("" +
-    new SqliteConnectionStringBuilder
-    {
-        DataSource = "hello.db"
-    }))
+                new SqliteConnectionStringBuilder
+                {
+                    DataSource = "hello.db"
+                }))
             {
                 connection.Open();
 
@@ -466,7 +457,7 @@ namespace KonusarakOgren.Controllers
                     return RedirectToAction("Exams", "Home");
                 }
                 else
-                    ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı!");
+                    ModelState.AddModelError("", "Username Or Password Is Wrong!!");
 
                 return View();
             }
