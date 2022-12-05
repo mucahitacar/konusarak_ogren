@@ -1,9 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\macar\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\macar\\.nuget\\packages",
-      "C:\\app\\dev\\devex\\Components\\Offline Packages"
-    ]
-  }
-}
